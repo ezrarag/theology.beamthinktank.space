@@ -1,80 +1,156 @@
+'use client';
+
+import { useState } from 'react';
+
+const religiousEyes = [
+  {
+    id: 'islam',
+    name: 'Islam',
+    symbol: '☪️',
+    eyeOpen: '👁️',
+    eyeClosed: '👁️‍🗨️'
+  },
+  {
+    id: 'christianity',
+    name: 'Christianity',
+    symbol: '✝️',
+    eyeOpen: '👁️',
+    eyeClosed: '👁️‍🗨️'
+  },
+  {
+    id: 'hinduism',
+    name: 'Hinduism',
+    symbol: '🕉️',
+    eyeOpen: '👁️',
+    eyeClosed: '👁️‍🗨️'
+  },
+  {
+    id: 'buddhism',
+    name: 'Buddhism',
+    symbol: '☸️',
+    eyeOpen: '👁️',
+    eyeClosed: '👁️‍🗨️'
+  },
+  {
+    id: 'judaism',
+    name: 'Judaism',
+    symbol: '✡️',
+    eyeOpen: '👁️',
+    eyeClosed: '👁️‍🗨️'
+  }
+];
+
 export default function Hero() {
+  const [hoveredEye, setHoveredEye] = useState<string | null>(null);
+
   return (
-    <section className="relative bg-gradient-to-r from-blue-900 via-purple-900 to-indigo-900 text-white overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+    <section className="relative bg-black text-white min-h-screen flex items-center justify-center overflow-hidden pt-16">
+      {/* Animated Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] animate-pulse"></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
-        <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Exploring
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-              World Religions
-            </span>
-            <span className="block">Through Dialogue</span>
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Join BEAM Theology & World Religions Institute in fostering understanding, 
-            respect, and meaningful connections across faith traditions and spiritual practices.
+      <div className="relative z-10 text-center">
+        {/* Religious Eyes Grid */}
+        <div className="grid grid-cols-5 gap-8 md:gap-12 lg:gap-16">
+          {religiousEyes.map((religion) => (
+            <div
+              key={religion.id}
+              className="relative group cursor-pointer"
+              onMouseEnter={() => setHoveredEye(religion.id)}
+              onMouseLeave={() => setHoveredEye(null)}
+            >
+              {/* Eye Container */}
+              <div className="relative w-20 h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 mx-auto">
+                {/* Hand-drawn Eye SVG */}
+                <svg
+                  viewBox="0 0 100 100"
+                  className="w-full h-full transition-all duration-500 ease-in-out"
+                >
+                  {/* Eye Outline */}
+                  <ellipse
+                    cx="50"
+                    cy="50"
+                    rx="40"
+                    ry="25"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                    className="transition-all duration-500"
+                  />
+                  
+                  {/* Eyelid */}
+                  <path
+                    d="M 10 50 Q 50 20 90 50"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                    className={`transition-all duration-500 ${
+                      hoveredEye === religion.id ? 'opacity-0' : 'opacity-100'
+                    }`}
+                  />
+                  
+                  {/* Iris */}
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="15"
+                    fill="white"
+                    className="transition-all duration-500"
+                  />
+                  
+                  {/* Pupil */}
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="8"
+                    fill="black"
+                    className="transition-all duration-500"
+                  />
+                  
+                  {/* Religious Symbol (hidden by default, shown on hover) */}
+                  <text
+                    x="50"
+                    y="55"
+                    textAnchor="middle"
+                    fontSize="20"
+                    fill="white"
+                    className={`transition-all duration-500 ${
+                      hoveredEye === religion.id ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
+                    {religion.symbol}
+                  </text>
+                </svg>
+              </div>
+
+              {/* Religion Name */}
+              <p className="text-sm md:text-base text-white/80 mt-4 font-light tracking-wide">
+                {religion.name}
+              </p>
+
+              {/* Hover Effect Glow */}
+              <div className={`absolute inset-0 rounded-full transition-all duration-500 ${
+                hoveredEye === religion.id 
+                  ? 'bg-white/10 scale-110 blur-xl' 
+                  : 'bg-transparent scale-100'
+              }`}></div>
+            </div>
+          ))}
+        </div>
+
+        {/* Subtle Call to Action */}
+        <div className="mt-16 opacity-40">
+          <div className="w-1 h-16 bg-white/30 mx-auto"></div>
+          <p className="text-white/30 text-xs tracking-widest mt-4 font-light">
+            HOVER TO EXPLORE
           </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href="#courses"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
-            >
-              Explore Courses
-            </a>
-            <a
-              href="#community"
-              className="border-2 border-white/30 hover:border-white/50 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors duration-200 hover:bg-white/10"
-            >
-              Join Community
-            </a>
-          </div>
-        </div>
-
-        {/* Interfaith Icons */}
-        <div className="mt-16 flex justify-center items-center space-x-8 md:space-x-16 opacity-80">
-          <div className="text-center">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-white/20 rounded-full flex items-center justify-center mb-3 mx-auto">
-              <span className="text-2xl md:text-3xl">🕌</span>
-            </div>
-            <p className="text-sm md:text-base text-blue-100">Islam</p>
-          </div>
-          
-          <div className="text-center">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-white/20 rounded-full flex items-center justify-center mb-3 mx-auto">
-              <span className="text-2xl md:text-3xl">⛪</span>
-            </div>
-            <p className="text-sm md:text-base text-blue-100">Christianity</p>
-          </div>
-          
-          <div className="text-center">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-white/20 rounded-full flex items-center justify-center mb-3 mx-auto">
-              <span className="text-2xl md:text-3xl">🕉️</span>
-            </div>
-            <p className="text-sm md:text-base text-blue-100">Hinduism</p>
-          </div>
-          
-          <div className="text-center">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-white/20 rounded-full flex items-center justify-center mb-3 mx-auto">
-              <span className="text-2xl md:text-3xl">☸️</span>
-            </div>
-            <p className="text-sm md:text-base text-blue-100">Buddhism</p>
-          </div>
-          
-          <div className="text-center">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-white/20 rounded-full flex items-center justify-center mb-3 mx-auto">
-              <span className="text-2xl md:text-3xl">✡️</span>
-            </div>
-            <p className="text-sm md:text-base text-blue-100">Judaism</p>
-          </div>
         </div>
       </div>
+
+      {/* Ambient Light Effects */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
     </section>
   );
 }
